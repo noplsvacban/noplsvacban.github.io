@@ -1,69 +1,99 @@
-const form = document.querySelector('form');
-form.addEventListener('submit', handleSubmit);
-    function handleSubmit(event) {
+$(document).ready(function() {
+  $("form").submit(function(event) {
     event.preventDefault();
-
-    const name = document.querySelector('#name').value;
-    const email = document.querySelector('#email').value;
-    const discord = document.querySelector('#discord').value;
-    const platform = [];
-    const platformCheckboxes = document.querySelectorAll('input[name="platform"]:checked');
-    platformCheckboxes.forEach((checkbox) => {
-      platform.push(checkbox.value);
+    
+    var name = $("#name").val();
+    var email = $("#email").val();
+    var discord = $("#discord").val();
+    var platform = [];
+    var platformOtherText = "";
+    $('input[name="platform"]:checked').each(function() {
+      platform.push($(this).val());
     });
-    const platformOtherText = document.querySelector('#platform_other_text').value;
-    if (platformOtherText) {
-      platform.push(platformOtherText);
+    if (platform.includes("Other")) {
+      platformOtherText = $("#platform_other_text").val();
     }
-    const favoriteFeature = document.querySelector('input[name="feature"]:checked').value;
-    const featureOtherText = document.querySelector('#feature_other_text').value;
-    if (featureOtherText) {
-      favoriteFeature += ` (${featureOtherText})`;
+    var feature = $("input[name='feature']:checked").val();
+    var featureOtherText = "";
+    if (feature == "Other") {
+      featureOtherText = $("#feature_other_text").val();
     }
-    const rating = document.querySelector('input[name="rating"]:checked').value;
-    const liked = document.querySelector('#liked').value;
-    const disliked = document.querySelector('#disliked').value;
-    const improvements = document.querySelector('#improvements').value;
-const elements = [];
-const elementCheckboxes = document.querySelectorAll('input[name="elements[]"]:checked');
-elementCheckboxes.forEach((checkbox) => {
-elements.push(checkbox.value);
-});
-const elementOtherText = document.querySelector('#element_other_text').value;
-if (elementOtherText) {
-elements.push(elementOtherText);
-}
-const contact = document.querySelector('input[name="contact"]:checked').value;
-const comments = document.querySelector('#comments').value;
-          const payload = {
-      "content": `**New Feedback**\n\n**Name:** ${name}\n**Email:** ${email}\n**Discord:** ${discord}\n**Platform:** ${platform.join(", ")}\n**Favorite Feature:** ${favoriteFeature}\n**Rating:** ${rating}\n**What I Liked:** ${liked}\n**What I Disliked:** ${disliked}\n**Improvements:** ${improvements}\n**Elements Noticed:** ${elements.join(", ")}\n**Preferred Contact Method:** ${contact}\n**Additional Comments:** ${comments}`,
-      "username": "Game Feedback Bot",
-      "avatar_url": "https://cdn.pixabay.com/photo/2016/07/23/12/08/wolf-1532158_960_720.png",
-      "embeds": [
-        {
-          "title": "New Feedback",
-          "description": "A new feedback has been submitted",
-          "color": 15258703,
-          "footer": {
-            "text": `Submitted at ${new Date().toLocaleString()}`
+    var rating = $("input[name='rating']:checked").val();
+    var liked = $("#liked").val();
+    var disliked = $("#disliked").val();
+    var improvements = $("#improvements").val();
+    var elements = [];
+    var elementOtherText = "";
+    $('input[name="elements[]"]:checked').each(function() {
+      elements.push($(this).val());
+    });
+    if (elements.includes("Other")) {
+      elementOtherText = $("#element_other_text").val();
+    }
+    
+    var payload = {
+      "username": "Game Feedback",
+      "avatar_url": "https://example.com/avatar.jpg",
+      "embeds": [{
+        "title": "New feedback received",
+        "color": 16711680,
+        "fields": [
+          {
+            "name": "Name",
+            "value": name
+          },
+          {
+            "name": "Email",
+            "value": email
+          },
+          {
+            "name": "Discord",
+            "value": discord
+          },
+          {
+            "name": "Platform",
+            "value": platform.join(", ") + (platformOtherText ? " (" + platformOtherText + ")" : "")
+          },
+          {
+            "name": "Favorite Feature",
+            "value": feature + (featureOtherText ? " (" + featureOtherText + ")" : "")
+          },
+          {
+            "name": "Overall Rating",
+            "value": rating
+          },
+          {
+            "name": "Liked",
+            "value": liked
+          },
+          {
+            "name": "Disliked",
+            "value": disliked
+          },
+          {
+            "name": "Improvements",
+            "value": improvements
+          },
+          {
+            "name": "Elements Noticed",
+            "value": elements.join(", ") + (elementOtherText ? " (" + elementOtherText + ")" : "")
           }
-        }
-      ]
-    }
-
-    const webhookUrl = "https://discord.com/api/webhooks/867782270000693259/cPvSV8WfnsBloKeYzp9HzADN6wKgXkKOQqfOIEiJn7RxVIf3Oh4bgMA13ZeMe5jIic8G";
-    fetch(webhookUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
+        ]
+      }]
+    };
+    
+    $.ajax({
+      url: "https://discord.com/api/webhooks/867782270000693259/cPvSV8WfnsBloKeYzp9HzADN6wKgXkKOQqfOIEiJn7RxVIf3Oh4bgMA13ZeMe5jIic8G",
+      type: "POST",
+      data: JSON.stringify(payload),
+      contentType: "application/json",
+      success: function() {
+        alert("Thank you for your feedback!");
+        $("form")[0].reset();
       },
-      body: JSON.stringify(payload)
-    })
-    .then(() => {
-      alert('Thank you for your feedback!');
-      form.reset();
-    })
-    .catch(() => {
-      alert('There was an error submitting your feedback. Please try again later.');
+      error: function() {
+        alert("Oops! Something went wrong. Please try again later.");
+      }
     });
-  }
+  });
+});
