@@ -1,6 +1,8 @@
 $(document).ready(function() {
-  $("form").submit(function(event) {
-    event.preventDefault();
+  var form = document.querySelector("form");
+  if (form) {
+    form.addEventListener("submit", function(event) {
+      event.preventDefault();
     
     var name = $("#name").val();
     var email = $("#email").val();
@@ -83,7 +85,7 @@ $(document).ready(function() {
     };
     
     $.ajax({
-      url: "https://discord.com/api/webhooks/867782270000693259/cPvSV8WfnsBloKeYzp9HzADN6wKgXkKOQqfOIEiJn7RxVIf3Oh4bgMA13ZeMe5jIic8G",
+      url: "https://discord.com/api/webhooks/1234567890/abcdefghijklmnopqrstuvwxyz",
       type: "POST",
       data: JSON.stringify(payload),
       contentType: "application/json",
@@ -95,5 +97,5 @@ $(document).ready(function() {
         alert("Oops! Something went wrong. Please try again later.");
       }
     });
-  });
+  }
 });
