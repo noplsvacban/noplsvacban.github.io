@@ -1,112 +1,80 @@
-$(document).ready(function() {
-  var form = document.querySelector("form");
+      const form = document.getElementById('qa-form');
+      const platformSelect = document.getElementById('platform');
+      const otherPlatformDiv = document.getElementById('other-platform-div');
+      const otherPlatformInput = document.getElementById('other-platform');
+      const emailInput = document.getElementById('email');
+      const discordInput = document.getElementById('discord');
 
-  if (form) {
-    form.addEventListener("submit", function(event) {
-      event.preventDefault();
-
-      var name = $("#name").val();
-      var email = $("#email").val();
-      var discord = $("#discord").val();
-
-      var platform = [];
-      var platformOtherText = "";
-
-      $('input[name="platform"]:checked').each(function() {
-        platform.push($(this).val());
-      });
-
-      if (platform.includes("Other")) {
-        platformOtherText = $("#platform_other_text").val();
-      }
-
-      var feature = $("input[name='feature']:checked").val();
-      var featureOtherText = "";
-
-      if (feature == "Other") {
-        featureOtherText = $("#feature_other_text").val();
-      }
-
-      var rating = $("input[name='rating']:checked").val();
-      var liked = $("#liked").val();
-      var disliked = $("#disliked").val();
-      var improvements = $("#improvements").val();
-
-      var elements = [];
-      var elementOtherText = "";
-
-      $('input[name="elements[]"]:checked').each(function() {
-        elements.push($(this).val());
-      });
-
-      if (elements.includes("Other")) {
-        elementOtherText = $("#element_other_text").val();
-      }
-
-      var payload = {
-        "username": "Game Feedback",
-        "avatar_url": "https://example.com/avatar.jpg",
-        "embeds": [{
-          "title": "New feedback received",
-          "color": 16711680,
-          "fields": [
-            {
-              "name": "Name",
-              "value": name
-            },
-            {
-              "name": "Email",
-              "value": email
-            },
-            {
-              "name": "Discord",
-              "value": discord
-            },
-            {
-              "name": "Platform",
-              "value": platform.join(", ") + (platformOtherText ? " (" + platformOtherText + ")" : "")
-            },
-            {
-              "name": "Favorite Feature",
-              "value": feature + (featureOtherText ? " (" + featureOtherText + ")" : "")
-            },
-            {
-              "name": "Overall Rating",
-              "value": rating
-            },
-            {
-              "name": "Liked",
-              "value": liked
-            },
-            {
-              "name": "Disliked",
-              "value": disliked
-            },
-            {
-              "name": "Improvements",
-              "value": improvements
-            },
-            {
-              "name": "Elements Noticed",
-              "value": elements.join(", ") + (elementOtherText ? " (" + elementOtherText + ")" : "")
-            }
-          ]
-        }]
-      };
-
-      $.ajax({
-        url: "https://discord.com/api/webhooks/867782270000693259/cPvSV8WfnsBloKeYzp9HzADN6wKgXkKOQqfOIEiJn7RxVIf3Oh4bgMA13ZeMe5jIic8G",
-        type: "POST",
-        data: JSON.stringify(payload),
-        contentType: "application/json",
-        success: function() {
-          alert("Thank you for your feedback!");
-          $("form")[0].reset();
-        },
-        error: function() {
-          alert("Oops! Something went wrong. Please try again later.");
+      platformSelect.addEventListener('change', () => {
+        if (platformSelect.value === 'other') {
+          otherPlatformDiv.style.display = 'block';
+          otherPlatformInput.required = true;
+        } else {
+          otherPlatformDiv.style.display = 'none';
+          otherPlatformInput.required = false;
         }
       });
+
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+
+        const name = document.getElementById('name').value;
+        const age = document.getElementById('age').value;
+        const favGame = document.getElementById('fav-game').value;
+        const platform = document.getElementById('platform').value;
+        const question = document.getElementById('question').value;
+        const email = emailInput.value;
+        const discord = discordInput.value;
+
+        if (!email && !discord) {
+          alert('Please provide at least one contact method (email or Discord).');
+          return;
+        }
+
+        if (discord) {
+          emailInput.required = false;
+        } else {
+          emailInput.required = true;
+        }
+
+        if (email) {
+          discordInput.required = false;
+        } else {
+          discordInput.required = true;
+        }
+
+        let payloadContent = `New question from ${name} (${age} years old):\n\nFavorite game: ${favGame}\nPlatform: ${platform}\nQuestion: ${question}`;
+
+        if (email) {
+          payloadContent += `\nEmail: ${email}`;
+        }
+
+        if (discord) {
+          payloadContent += `\nDiscord username: ${discord}`;
+    }
+
+    const payload = {
+      content: payloadContent
+    };
+
+    const webhookUrl = 'https://discord.com/api/webhooks/867782270000693259/cPvSV8WfnsBloKeYzp9HzADN6wKgXkKOQqfOIEiJn7RxVIf3Oh4bgMA13ZeMe5jIic8G';
+
+    fetch(webhookUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      alert('Your question has been submitted!');
+      form.reset();
+    })
+    .catch(error => {
+      alert('There was an error submitting your question. Please try again later.');
+      console.error('Error:', error);
     });
-  }
-});
+  });
