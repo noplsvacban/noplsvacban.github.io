@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="UTF-8">
-    <title>Game Feedback</title>
+    <meta charset="utf-8">
+    <title>Game Q&A</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/jpg" href="images/authorplaceholder.jpg">
     <link rel="stylesheet" href="css/test.css">
@@ -10,74 +10,42 @@
     <script src="js/test.js"></script>
   </head>
   <body>
-    <h1>Game Feedback</h1>
-    <p>Please provide your feedback about the game:</p>
-    <form>
-      <label for="name">Name:</label>
-      <input type="text" id="name" name="name" required><br><br>
-      <label for="email">Email:</label>
-      <input type="email" id="email" name="email" required><br><br>
-      <label for="discord">Discord:</label>
-      <input type="text" id="discord" name="discord"><br><br>
-      <label>What platform did you play the game on?</label><br>
-      <input type="checkbox" id="platform_pc" name="platform" value="PC">
-      <label for="platform_pc">PC</label><br>
-      <input type="checkbox" id="platform_console" name="platform" value="Console">
-      <label for="platform_console">Console</label><br>
-      <input type="checkbox" id="platform_mobile" name="platform" value="Mobile">
-      <label for="platform_mobile">Mobile</label><br>
-      <input type="checkbox" id="platform_other" name="platform" value="Other">
-      <label for="platform_other">Other:</label>
-      <input type="text" id="platform_other_text" name="platform_other_text"><br><br>
-      <label>What is your favorite feature of the game?</label><br>
-      <input type="radio" id="feature_story" name="feature" value="Story" required>
-      <label for="feature_story">Story</label><br>
-      <input type="radio" id="feature_gameplay" name="feature" value="Gameplay" required>
-      <label for="feature_gameplay">Gameplay</label><br>
-      <input type="radio" id="feature_graphics" name="feature" value="Graphics" required>
-      <label for="feature_graphics">Graphics</label><br>
-      <input type="radio" id="feature_sound" name="feature" value="Sound" required>
-      <label for="feature_sound">Sound</label><br>
-      <input type="radio" id="feature_other" name="feature" value="Other">
-      <label for="feature_other">Other:</label>
-      <input type="text" id="feature_other_text" name="feature_other_text"><br><br>
-      <label>How would you rate the game overall?</label><br>
-      <input type="radio" id="rating_1" name="rating" value="1">
-      <label for="rating_1">1 - Terrible</label><br>
-      <input type="radio" id="rating_2" name="rating" value="2">
-      <label for="rating_2">2 - Bad</label><br>
-      <input type="radio" id="rating_3" name="rating" value="3">
-      <label for="rating_3">3 - Okay</label><br>
-      <input type="radio" id="rating_4" name="rating" value="4">
-      <label for="rating_4">4 - Good</label><br>
-      <input type="radio" id="rating_5" name="rating" value="5">
-      <label for="rating_5">5 - Excellent</label><br><br>
-<label>What did you like about the game?</label><br>
-<textarea id="liked" name="liked" rows="4" cols="50" required></textarea><br><br>
-<label>What did you dislike about the game?</label><br>
-<textarea id="disliked" name="disliked" rows="4" cols="50" required></textarea><br><br>
-<label>What changes or improvements would you like to see in the game?</label><br>
-<textarea id="improvements" name="improvements" rows="4" cols="50" required></textarea><br><br>
-<label>Which of the following elements did you notice in the game?</label><br>
-<input type="checkbox" id="element_1" name="elements[]" value="Element 1">
-<label for="element_1">Element 1</label><br>
-<input type="checkbox" id="element_2" name="elements[]" value="Element 2">
-<label for="element_2">Element 2</label><br>
-<input type="checkbox" id="element_3" name="elements[]" value="Element 3">
-<label for="element_3">Element 3</label><br>
-<input type="checkbox" id="element_other" name="elements[]" value="Other">
-<label for="element_other">Other:</label>
-<input type="text" id="element_other_text" name="element_other_text"><br><br>
-<label>What is your preferred method of contact?</label><br>
-<input type="radio" id="contact_email" name="contact" value="Email" required>
-<label for="contact_email">Email</label><br>
-<input type="radio" id="contact_discord" name="contact" value="Discord">
-<label for="contact_discord">Discord</label><br>
-<input type="checkbox" id="contact_both" name="contact" value="Both">
-<label for="contact_both">Both</label><br><br>
-<label>Additional Comments:</label><br>
-<textarea id="comments" name="comments" rows="4" cols="50"></textarea><br><br>
-<input type="submit" value="Send Feedback">
-</form>
-</body>
+    <h1>Game Q&A</h1>
+    <form id="qa-form">
+      
+      <label for="email">What's your email address? (optional)</label>
+      <input type="email" id="email"><br>
+
+      <label for="discord">What's your Discord username? (optional)</label>
+      <input type="text" id="discord"><br>
+      
+      <label for="name">What's your name?</label>
+      <input type="text" id="name" required><br>
+
+      <label for="age">How old are you?</label>
+      <input type="number" id="age" required><br>
+
+      <label for="fav-game">What's your favorite game?</label>
+      <input type="text" id="fav-game" required><br>
+
+      <label for="platform">What platform do you play on?</label>
+      <select id="platform" required>
+        <option value="">--Please select--</option>
+        <option value="pc">PC</option>
+        <option value="console">Console</option>
+        <option value="mobile">Mobile</option>
+        <option value="other">Other</option>
+      </select><br>
+
+      <div id="other-platform-div" style="display: none;">
+        <label for="other-platform">Please specify:</label>
+        <input type="text" id="other-platform">
+      </div>
+
+      <label for="question">What's your question?</label>
+      <textarea id="question" required></textarea><br>
+
+      <button type="submit">Send</button>
+    </form>
+  </body>
 </html>
