@@ -1,196 +1,94 @@
-/* Global styles */
-* {
-  box-sizing: border-box;
+/* Main container */
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
 }
 
-body {
-  font-family: Arial, sans-serif;
-  background-color: #f1f1f1;
-}
-
+/* Header */
 h1 {
+  font-size: 32px;
+  font-weight: bold;
   text-align: center;
-  font-size: 2.5rem;
-  margin-top: 3rem;
+  margin-bottom: 30px;
 }
 
-/* Form styles */
+/* Form */
 form {
-  background-color: #fff;
+  background-color: #f1f1f1;
   border-radius: 10px;
   padding: 2rem;
   max-width: 600px;
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 label {
+  font-size: 18px;
   font-weight: bold;
+  margin-bottom: 10px;
 }
 
 input[type="text"],
+input[type="number"],
 input[type="email"],
-textarea {
-  width: 100%;
-  padding: 0.5rem;
-  border: 2px solid #ccc;
+input[type="password"],
+textarea,
+select {
+  padding: 10px;
+  font-size: 16px;
   border-radius: 5px;
-  margin-bottom: 1rem;
-  font-size: 1rem;
-}
-
-input[type="checkbox"] + label {
-  display: inline-block;
-  vertical-align: top;
-  margin-right: 1rem;
-  cursor: pointer;
-}
-
-
-
-input[type="checkbox"] {
-  display: none;
-}
-
-input[type="checkbox"] + label:before {
-  display: inline-block;
-  vertical-align: top;
-  content: "";
-  width: 1rem;
-  height: 1rem;
-  margin-right: 0.5rem;
-  border-radius: 3px;
-  border: 2px solid #ccc;
-}
-
-input[type="checkbox"]:checked + label:before {
-  background-color: #4CAF50;
-  border-color: #4CAF50;
-}
-
-input[type="checkbox"] + label:after {
-  display: block;
-  content: attr(for);
-  font-size: 1rem;
-  margin-top: 0.5rem;
-}
-
-input[type="checkbox"]:not(:last-child) {
-  margin-right: 2rem;
-}
-
-input[type="radio"] {
-  display: none;
-}
-
-input[type="radio"] + label {
-  display: inline-block;
-  vertical-align: top;
-  margin-right: 1rem;
-  cursor: pointer;
-}
-
-input[type="radio"] + label:before {
-  display: inline-block;
-  vertical-align: top;
-  content: "";
-  width: 1rem;
-  height: 1rem;
-  margin-right: 0.5rem;
-  border-radius: 50%;
-  border: 2px solid #ccc;
-}
-
-input[type="radio"]:checked + label:before {
-  background-color: #4CAF50;
-  border-color: #4CAF50;
-}
-
-input[type="radio"] + label:after {
-  display: block;
-  content: attr(for);
-  font-size: 1rem;
-  margin-top: 0.5rem;
-}
-
-@media only screen and (max-width: 600px) {
-  input[type="radio"] + label:after {
-    display: inline-block;
-    margin-left: 1rem;
-  }
-}
-
-textarea {
-  height: 100px;
-}
-
-input[type="submit"] {
-  background-color: #4CAF50;
-  color: #fff;
-  padding: 0.5rem;
   border: none;
+  margin-bottom: 20px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border: 2px solid #3498db;
+}
+
+input[type="text"]:invalid,
+input[type="number"]:invalid,
+input[type="email"]:invalid,
+input[type="password"]:invalid,
+textarea:invalid,
+select:invalid {
+  border: 2px solid #e74c3c;
+}
+
+#other-platform-div {
+  margin-bottom: 20px;
+}
+
+/* Submit button */
+button[type="submit"] {
+  background-color: #3498db;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
   border-radius: 5px;
+  font-size: 18px;
+  font-weight: bold;
   cursor: pointer;
 }
 
-input[type="submit"]:hover {
-  background-color: #3e8e41;
+button[type="submit"]:hover {
+  background-color: #2980b9;
 }
 
-/* Additional styles */
-.question-group {
-  margin-bottom: 2rem;
-}
-
-.question {
-  font-size: 1.2rem;
-  margin-bottom: 0.5rem;
-}
-
-.required {
-  color: #FF4136;
-  margin-left: 0.5rem;
-}
-
-.checkbox-group {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.radio-group {
-  display: flex;
-  flex-wrap: wrap;
-  margin-bottom: 2rem;
-}
-
-.radio-group label {
-  margin-right: 2rem;
-}
-
-.rating-group {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  margin-top: 2rem;
-  margin-bottom: 2rem;
-}
-
-.rating-group label {
-  font-size: 1.5rem;
-  margin-right: 1rem;
-}
-
-.rating-group input[type="radio"] {
-  display: none;
-}
-
-.rating-group label:before {
-  content: "☆";
-  color: #ddd;
-  font-size: 2.5rem;
-  margin-right: 0.5rem;
-}
-
-.rating-group input[type="radio"]:checked + label:before {
-  content: "★";
-  color: #FFD700;
+/* Error message */
+#error-message {
+  color: #e74c3c;
+  margin-top: 10px;
+  font-size: 14px;
+  font-weight: bold;
 }
