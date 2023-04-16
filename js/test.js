@@ -1,3 +1,4 @@
+document.addEventListener('DOMContentLoaded', () => {
       const form = document.getElementById('qa-form');
       const platformSelect = document.getElementById('platform');
       const otherPlatformDiv = document.getElementById('other-platform-div');
@@ -78,3 +79,4 @@
       console.error('Error:', error);
     });
   });
+});
